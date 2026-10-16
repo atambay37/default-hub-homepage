@@ -8,6 +8,8 @@ Any changes made in this repository will be reflected in the JupyterHub within 5
 
 The `schmidt-astro-events` branch customizes the login page for the [Schmidt Observatory System Science Symposium](https://symposium.schmidtobservatorysystem.org/) hub, styled after the event website. [`DESIGN.md`](DESIGN.md) records the design system and [`PRODUCT.md`](PRODUCT.md) the product context.
 
+AI-assisted contributions follow the [AI policy](AI_POLICY.md).
+
 Previews of `templates/login.html`, rendered with the hub's template vars against JupyterHub 5.5.3's base templates:
 
 | Desktop, light theme | Desktop, dark theme |
