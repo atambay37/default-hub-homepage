@@ -189,7 +189,7 @@ A cool, near-monochrome palette of blue-black inks and pale greys, with a single
 - **Title** (500, 1.75rem, 1.12): the "Sign in" heading inside the card.
 - **Body** (400, 17px, 1.62): page copy. Info-list answers cap at 68ch.
 - **UI** (600, 0.96rem): button labels; input text uses the same size at 400. Field labels are 600 at 0.86rem. The date and place line is 500 at 0.96rem, with the date at 700 and a rule-coloured slash between.
-- **Label** (600 to 700, 0.72rem, 0.14 to 0.16em, uppercase): only two places: the "Science Symposium" nav lockup and the footer credit labels (Operated by, Funded by, Designed by).
+- **Label** (600 to 700, 0.72rem, 0.14 to 0.16em, uppercase): only three places: the "Science Symposium" nav lockup, the footer credit labels (Operated by, Funded by, Designed by) and the footer co-brand line ("An initiative of", 400, muted).
 
 ### Named Rules
 **The Serif Names, Sans Works Rule.** Newsreader is for headings. Everything a person reads to act on (labels, buttons, answers, errors) is Hanken Grotesk.
@@ -231,6 +231,7 @@ Quiet and solid; the only filled control on the page.
 ### Cards / Containers
 - **Sign-in card:** surface fill, 1px rule border, 6px corners, card-lift shadow, 34px padding (26px by 22px at 640px), max 420px wide.
 - **Info list:** surface fill, 1px rule border, 6px corners, rows divided by hairlines, question in ink 600, answer in soft ink.
+- **Sign-in hints:** below the button, after a hairline and 16px of space: 0.86rem soft-ink notes, 10px apart. The first explains the username and password; the second is the AI logging notice, whose "How interactions are handled" link never wraps and jumps to the AI interactions section (scroll-margin clears the sticky nav).
 - **Announcement box:** paper-band fill, rule border, 6px corners, 16px by 20px padding, max 52ch.
 
 ### Inputs / Fields
@@ -241,7 +242,7 @@ Quiet and solid; the only filled control on the page.
 
 ### Links
 - **Body links:** teal-ink with a 1px underline at 40% of the text colour, 3px offset; on hover the link turns ink and the underline goes solid.
-- **Links inside headings:** the welcome heading's org name stays ink with a 25% currentColor underline, which turns signal-teal on hover and focus. The hero title's org-name link has no underline.
+- **Display links:** the acknowledgment names (Newsreader 500, 1.2rem) stay ink with a 25% currentColor underline, which turns signal-teal on hover and focus. The hero title's org-name link has no underline.
 - **Footer links:** footer-link with a 35% underline, white on hover.
 
 ### Navigation
@@ -249,6 +250,14 @@ A sticky translucent bar holding one lockup: the org logo (42px high), a 1px by 
 
 ### Logo plates
 Jupyter and RStudio marks sit on 64px-high plates with 18px side padding, 1px rule border and 6px corners; the border turns ink on hover. In dark theme the plate is dark-logo-plate with no border.
+
+### Split sections
+The AI interactions notice and Acknowledgments sit on the page ground after the FAQ band, each with a hairline top rule and 72px by 80px vertical padding (56px by 64px at 560px). They share one grid, the FAQ's: a 240px heading column (Newsreader 400, 1.5 to 1.85rem) and a content column, 56px apart, stacked at 900px and below.
+- **AI notice:** a soft-ink paragraph at 68ch, then the three promises as rule-divided rows, each led by a 600 ink phrase.
+- **Acknowledgments:** a 2 by 2 list (one column at 560px) of organization names as display links, each over its parent organization in 0.9rem soft ink, every entry under a 1px rule. The heading drops 14px to line up with the first names. Text only, no logos.
+
+### Footer co-brand
+Under the footer logo, 20px down: "An initiative of" in the label style (muted, 0.14em tracking) beside the white Schmidt Sciences logo at 26px, linked to schmidtsciences.org, wrapping on narrow screens. Copied from the event site's own footer.
 
 ### Orbit rings (signature)
 Two hairline circles centred on the sign-in card and behind it: outer 860px in hairline, inner 540px in rule. One 8px signal-teal dot rides the inner ring on a 60s linear loop, parked at -90deg (mid-left, clear of the card) so it is visible on the first frame. Under reduced motion the loop stops at that parked position. At 900px and below the rings shrink to 640px and 460px, the animation stops and the dot is hidden so it never crosses the stacked title. The rings are decorative (`aria-hidden`) and never take pointer events.

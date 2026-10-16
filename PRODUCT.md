@@ -26,7 +26,7 @@ The symposium's own compute environment. It comes preloaded with access to Schmi
 - Sign-in uses JupyterHub's `shared-password` authenticator: a username plus the shared event password, with no OAuth provider.
 - Users land in JupyterLab (`defaultUrl: /lab`). RStudio is also offered.
 - The `schmidt-observatory-system` S3 bucket is mounted into user environments.
-- LLM API keys are provisioned per user through a LiteLLM key provisioner.
+- LLM API keys are provisioned per user through a LiteLLM key provisioner. AI model interactions (prompts, responses, plugin usage patterns, session metadata) are logged, de-identified, through the LiteLLM AI Gateway of the LLMoxie AI platform (https://arxiv.org/abs/2607.02703), for research and product improvement only, and never shared with third parties in re-identifiable form (confirmed by the user, 2026-10-16).
 - Git operations against GitHub go through a GitHub App credential helper.
 - Hub config lives in [2i2c-org/infrastructure](https://github.com/2i2c-org/infrastructure) at `config/clusters/schmidt-astro-events/`. The homepage template vars (org name, logo, URLs, operated/funded/designed by) come from `common.values.yaml` under `jupyterhub.custom.homepage.templateVars`.
 
@@ -44,7 +44,7 @@ The symposium's own compute environment. It comes preloaded with access to Schmi
 - This is Schmidt Observatory System's **official event**, so their name and logo are in use with that standing.
 - The org name is exactly "Schmidt Observatory System Science Symposium". The parent organization is "Schmidt Sciences" (two words, plural), never "Schmidt Science" or "Schmidt Futures".
 - Look and feel follow the event website, https://symposium.schmidtobservatorysystem.org/. The visual system built from it is recorded in `DESIGN.md`.
-- Copy taken from the event site is limited to what the user approved: the fact line "November 3–5, 2026 / Florence, Italy". The site's other copy, including the "An initiative of Schmidt Sciences" co-brand, is not used without approval.
+- Copy taken from the event site is limited to what the user approved: the fact line "November 3–5, 2026 / Florence, Italy". The footer co-brand "An initiative of" + the Schmidt Sciences logo is also approved (user request, 2026-10-16), styled as on the event site. The site's other copy is not used without approval.
 - 2i2c is credited as operator and designer; the 2i2c infrastructure footer stays.
 
 ## Evidence on Hand

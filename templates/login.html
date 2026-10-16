@@ -57,8 +57,8 @@
   <header class="sym-nav">
     <div class="sym-wrap sym-nav-inner">
       <a href="{{ custom.org.url }}" class="sym-lockup">
-        <img src="{{ custom.org.logo_url }}" alt="{{ custom.org.name }}" class="hub-logo sym-logo-color" />
-        <img src="{{ static_url("extra-assets/images/sos-logo-white.png") }}" alt="{{ custom.org.name }}" class="sym-logo-white" />
+        <img src="{{ custom.org.logo_url }}" alt="Schmidt Observatory System" class="hub-logo sym-logo-color" />
+        <img src="{{ static_url("extra-assets/images/sos-logo-white.png") }}" alt="Schmidt Observatory System" class="sym-logo-white" />
         <span class="sym-lockup-rule" aria-hidden="true"></span>
         <b>Science<br>Symposium</b>
       </a>
@@ -94,6 +94,15 @@
           <div id="login-main">
             {% block login_container %}
             {{ super() }}
+            <p class="sym-signin-hint">
+              Use the event password from the organizers and any username you like.
+              Sign in with the same username each time to get back to your files.
+            </p>
+            <p class="sym-signin-hint sym-signin-ai">
+              AI model interactions on this hub are logged for research. By signing in
+              and using its AI models, you agree to this logging.
+              <a href="#ai-interactions" class="sym-nowrap">How interactions are handled</a>
+            </p>
             {% endblock %}
           </div>
         </div>
@@ -104,9 +113,7 @@
   <section class="sym-about">
     <div class="sym-wrap">
       <div class="sym-about-head">
-        <h2 class="details-welcome">
-          Welcome to the <a href="{{ custom.org.url }}">{{ custom.org.name }}</a> 2i2c JupyterHub.
-        </h2>
+        <h2 class="details-welcome">Your workspace for the symposium</h2>
         <div class="details-logos">
           <a href="https://jupyter.org">
             <img src="{{static_url("extra-assets/images/jupyter-logo.svg") }}" alt='Jupyter' height="44" />
@@ -119,6 +126,28 @@
 
       <dl class="questions sym-info">
         <div class="sym-info-row">
+          <dt>What is this hub?</dt>
+          <dd>
+            A shared computing environment for the {{ custom.org.name }}.
+            You work in JupyterLab, with RStudio also available, and Schmidt Observatory
+            System data is already connected. There is nothing to install.
+          </dd>
+        </div>
+        <div class="sym-info-row">
+          <dt>Who can sign in?</dt>
+          <dd>
+            Symposium attendees, instructors and organizers, using the event password
+            from the organizers.
+          </dd>
+        </div>
+        <div class="sym-info-row">
+          <dt>How long will my work be kept?</dt>
+          <dd>
+            The hub is for the symposium only and will be shut down after the event.
+            Download your notebooks or push them to GitHub to keep them.
+          </dd>
+        </div>
+        <div class="sym-info-row">
           <dt>Where can I learn more?</dt>
           <dd>
             {% if custom.learn_more is defined %}
@@ -128,38 +157,51 @@
             {% endif %}
           </dd>
         </div>
-        <div class="sym-info-row">
-          <dt>What is a Jupyter Notebook?</dt>
-          <dd>
-            <a href="https://jupyter.org">Jupyter Notebook</a> is an open-source web application that allows you to create and
-            share documents that contain live code, equations, visualizations and narrative
-            text. Uses include: data cleaning and transformation, numerical simulation,
-            statistical modeling, data visualization, machine learning, and much more.
-          </dd>
-        </div>
-        <div class="sym-info-row">
-          <dt>What is JupyterHub?</dt>
-          <dd>
-            <a href="https://github.com/jupyterhub/jupyterhub">JupyterHub</a> brings
-            the power of notebooks to groups of users. It gives users access to
-            computational environments and resources without burdening the users with
-            installation and maintenance tasks. Users - including students,
-            researchers, and data scientists - can get their work done in their own
-            workspaces on shared resources which can be managed efficiently by system
-            administrators.
-          </dd>
-        </div>
-        <div class="sym-info-row">
-          <dt>Who can use this service?</dt>
-          <dd>
-            This JupyterHub service is open to anyone that a hub administrator has approved.
-            Generally this means instructors and students. As this
-            is a proof-of-concept service, students should ensure they are backing up
-            their notebooks regularly if they are using this service for course
-            activities.
-          </dd>
-        </div>
       </dl>
+    </div>
+  </section>
+
+  <section class="sym-ai" id="ai-interactions" aria-labelledby="sym-ai-title">
+    <div class="sym-wrap sym-split">
+      <h2 id="sym-ai-title" class="sym-split-title">AI interactions</h2>
+      <div class="sym-ai-body">
+        <p>
+          To help improve AI-assisted research software tools, this hub logs your
+          interactions with AI models (prompts, model responses, plugin usage patterns
+          and session metadata) through the LiteLLM AI Gateway of the
+          <a href="https://arxiv.org/abs/2607.02703">LLMoxie</a> AI platform.
+          These logs are:
+        </p>
+        <ul class="sym-ai-list">
+          <li><b>De-identified.</b> They are not linked to your name.</li>
+          <li><b>Used for research only.</b> They serve research and product improvement and nothing else.</li>
+          <li><b>Not shared in identifiable form.</b> They are never shared with third parties in a re-identifiable form.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sym-thanks" aria-labelledby="sym-thanks-title">
+    <div class="sym-wrap sym-split">
+      <h2 id="sym-thanks-title" class="sym-split-title">Acknowledgments</h2>
+      <ul class="sym-thanks-list">
+        <li>
+          <a href="https://escience.washington.edu/">eScience Institute</a>
+          <span>University of Washington</span>
+        </li>
+        <li>
+          <a href="https://escience.washington.edu/software-engineering/ssec/">Scientific Software Engineering Center</a>
+          <span>eScience Institute, University of Washington</span>
+        </li>
+        <li>
+          <a href="https://2i2c.org/">2i2c</a>
+          <span>International Interactive Computing Collaboration</span>
+        </li>
+        <li>
+          <a href="https://www.schmidtsciences.org/viss/">Virtual Institute for Scientific Software</a>
+          <span>Schmidt Sciences</span>
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -168,6 +210,12 @@
       <div class="sym-footer-top">
         <div class="sym-footer-brand">
           <img src="{{ static_url("extra-assets/images/sos-logo-white.png") }}" alt="{{ custom.org.name }}" class="sym-footer-logo" />
+          <div class="sym-cobrand">
+            <span>An initiative of</span>
+            <a href="https://www.schmidtsciences.org/">
+              <img src="{{ static_url("extra-assets/images/schmidt-sciences-white.png") }}" alt="Schmidt Sciences" />
+            </a>
+          </div>
         </div>
         <div id="operated-by" class="sym-credits">
           <div>
