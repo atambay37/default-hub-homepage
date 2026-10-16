@@ -14,10 +14,6 @@ Previews of `templates/login.html`, rendered with the hub's template vars agains
 | --- | --- |
 | ![Login page on desktop in the light theme](docs/screenshots/login-desktop-light.png) | ![Login page on desktop in the dark theme](docs/screenshots/login-desktop-dark.png) |
 
-| Phone (390px wide) | Sign-in error |
-| --- | --- |
-| <img src="docs/screenshots/login-mobile.png" alt="Login page at phone width" width="260"> | ![Sign-in card showing an invalid username or password error](docs/screenshots/login-error.png) |
-
 ## General, out of the box variations to the default homepage via existing branches
 
 In this repositories there are some branches that provide alternatives to the default 2i2c landing page, but without being specific to a certain community hub. These are:
