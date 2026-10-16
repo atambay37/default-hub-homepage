@@ -1,94 +1,753 @@
-#home {
-    margin-top: 32px
+/*
+ * Login page for the Schmidt Observatory System Science Symposium hub.
+ * Visual system follows the event website, https://symposium.schmidtobservatorysystem.org/
+ * (Newsreader + Hanken Grotesk, hairline rules, near-black controls, teal links),
+ * with a dark theme derived from that site's footer palette.
+ */
+
+:root {
+    --sym-bg: #ffffff;
+    --sym-bg-alt: #f5f6f8;
+    --sym-surface: #ffffff;
+    --sym-ink: #15191e;
+    --sym-ink-soft: #434b53;
+    --sym-muted: #5f6870;
+    --sym-line: #e4e7ea;
+    --sym-hairline: #eef0f2;
+    --sym-teal: #0a8f93;
+    /* Darker teal for running text: #0a8f93 is 3.9:1 on white, this is 5.1:1 */
+    --sym-teal-ink: #087c80;
+    --sym-blue: #2b7ca6;
+    --sym-purple: #6f4a97;
+    --sym-error: #b42318;
+    --sym-error-bg: #fdf1f0;
+    --sym-error-line: #f2c9c4;
+    --sym-btn-bg: #15191e;
+    --sym-btn-ink: #ffffff;
+    /* Hover uses the text teal: white on #0a8f93 is only 3.9:1 */
+    --sym-btn-hover-bg: #087c80;
+    --sym-btn-hover-ink: #ffffff;
+    --sym-nav-bg: rgba(255, 255, 255, 0.86);
+    --sym-footer-bg: #0e1216;
+
+    --sym-display: "Newsreader", "Iowan Old Style", Georgia, serif;
+    --sym-body: "Hanken Grotesk", -apple-system, "Segoe UI", sans-serif;
+    --sym-r: 6px;
+    --sym-r-sm: 3px;
+    --sym-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+    --sym-maxw: 1140px;
 }
 
-.login-container {
-    margin-top: 32px;
+[data-bs-theme="dark"] {
+    --sym-bg: #12171c;
+    --sym-bg-alt: #0e1216;
+    --sym-surface: #171d23;
+    --sym-ink: #eef1f3;
+    --sym-ink-soft: #b9c1c8;
+    --sym-muted: #949da5;
+    --sym-line: rgba(255, 255, 255, 0.13);
+    --sym-hairline: rgba(255, 255, 255, 0.08);
+    --sym-teal: #0fb5b5;
+    --sym-teal-ink: #3cc6c6;
+    --sym-error: #ffb4ab;
+    --sym-error-bg: rgba(180, 35, 24, 0.18);
+    --sym-error-line: rgba(255, 180, 171, 0.35);
+    --sym-btn-bg: #eef1f3;
+    --sym-btn-ink: #15191e;
+    --sym-btn-hover-bg: #0fb5b5;
+    --sym-btn-hover-ink: #15191e;
+    --sym-nav-bg: rgba(18, 23, 28, 0.86);
+    --sym-footer-bg: #0a0d10;
 }
 
-#login-main {
+body {
+    background: var(--sym-bg);
+    color: var(--sym-ink);
+}
+
+.sym {
+    font-family: var(--sym-body);
+    font-size: 17px;
+    line-height: 1.62;
+    color: var(--sym-ink);
+    background: var(--sym-bg);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    caret-color: var(--sym-teal);
+}
+
+.sym ::selection {
+    background: var(--sym-teal);
+    color: #ffffff;
+}
+
+.sym a {
+    color: var(--sym-teal-ink);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+    transition: color 0.2s, text-decoration-color 0.2s;
+}
+
+.sym a:hover {
+    color: var(--sym-ink);
+    text-decoration-color: currentColor;
+}
+
+.sym a:focus-visible,
+.sym button:focus-visible,
+.sym input:focus-visible {
+    outline: 2px solid var(--sym-teal);
+    outline-offset: 3px;
+    border-radius: var(--sym-r-sm);
+}
+
+.sym-wrap {
+    max-width: var(--sym-maxw);
+    margin: 0 auto;
+    padding: 0 28px;
+}
+
+@media (max-width: 640px) {
+    .sym-wrap {
+        padding: 0 20px;
+    }
+}
+
+/* Light/dark logo pairs */
+.sym .sym-logo-white {
+    display: none;
+}
+
+[data-bs-theme="dark"] .sym .sym-logo-color {
+    display: none;
+}
+
+[data-bs-theme="dark"] .sym .sym-logo-white {
+    display: block;
+}
+
+/* Nav */
+
+.sym-nav {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    background: var(--sym-nav-bg);
+    -webkit-backdrop-filter: saturate(150%) blur(12px);
+    backdrop-filter: saturate(150%) blur(12px);
+    border-bottom: 1px solid var(--sym-hairline);
+}
+
+.sym-nav-inner {
+    display: flex;
+    align-items: center;
+    height: 68px;
+}
+
+.sym .sym-lockup {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    text-decoration: none;
+}
+
+.sym-lockup img {
+    display: block;
+    height: 42px;
+    width: auto;
+}
+
+.sym-lockup-rule {
+    width: 1px;
+    height: 26px;
+    background: var(--sym-line);
+}
+
+.sym-lockup b {
+    font-family: var(--sym-body);
+    font-weight: 600;
+    font-size: 0.72rem;
+    line-height: 1.25;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--sym-muted);
+    transition: color 0.2s;
+}
+
+.sym .sym-lockup:hover b {
+    color: var(--sym-ink);
+}
+
+/* Hero */
+
+.sym-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 72px 0 88px;
+}
+
+.sym-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(1200px 520px at 78% -8%, color-mix(in srgb, var(--sym-teal) 7%, transparent) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.sym-hero-text {
+    position: relative;
+    z-index: 2;
+}
+
+.sym-hero-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 64px;
+    align-items: center;
+}
+
+.sym-hero-logo {
+    display: block;
+    width: min(320px, 72%);
     height: auto;
+    margin: 0 0 28px;
 }
 
-#login-button {
-    margin-top: 32px;
-}
-#operated-by {
-    margin-top: 8px;
-    color: darkgrey;
-}
-
-#operated-by a {
-    color:grey;
-    font-weight: bold;
-}
-
-[data-bs-theme="dark"] #operated-by a {
-    color: lightgray;
-    font-weight: bold;
+.sym-hero h1 {
+    margin: 0 0 22px;
+    max-width: 17ch;
+    font-family: var(--sym-display);
+    font-weight: 400;
+    font-size: clamp(2.2rem, 3.7vw, 3.3rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--sym-ink);
+    text-wrap: balance;
 }
 
-.details {
-    margin-top: 32px;
+.sym .sym-hero h1 a {
+    color: inherit;
+    text-decoration: none;
 }
 
-.details-welcome {
-    color: black;
+.sym-accent {
+    display: block;
+    color: var(--sym-teal-ink);
 }
 
-[data-bs-theme="dark"] .details-welcome {
-    color: white;
-  }
-
-.details-logos img {
-    margin: 12px;
-    text-align: right;
+.sym-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin: 0;
+    font-size: 0.96rem;
+    font-weight: 500;
+    color: var(--sym-ink);
 }
 
-.details p {
-    color: grey;
+.sym-meta b {
+    font-weight: 700;
+}
+
+.sym-meta-sep {
+    color: var(--sym-line);
 }
 
 .announcements {
-    margin-top: 8px;
-}
-
-.announcements > div {
-    margin-top: 16px;
-    padding-top: 4px;
-    padding-bottom: 5px;
-    border: 2px dotted orange;
+    margin-top: 28px;
+    max-width: 52ch;
 }
 
 .announcements-text {
-    padding-left: 10px;
+    padding: 16px 20px;
+    background: var(--sym-bg-alt);
+    border: 1px solid var(--sym-line);
+    border-radius: var(--sym-r);
+    font-size: 0.98rem;
+    color: var(--sym-ink);
 }
 
-.questions {
+.announcements-text + .announcements-text {
+    margin-top: 10px;
+}
+
+/* Sign-in card, centred in the orbit rings */
+
+.sym-signin {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.sym-orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 1px solid var(--sym-line);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.sym-orbit-outer {
+    width: 860px;
+    height: 860px;
+    margin: -430px 0 0 -430px;
+    border-color: var(--sym-hairline);
+}
+
+.sym-orbit-inner {
+    width: 540px;
+    height: 540px;
+    margin: -270px 0 0 -270px;
+    /* Parked at -90deg (mid-left of the ring, clear of the card) so the dot is in view on the first frame and when motion is reduced */
+    transform: rotate(-90deg);
+    animation: sym-orbit 60s linear infinite;
+}
+
+.sym-orbit-dot {
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    margin-left: -4px;
+    border-radius: 50%;
+    background: var(--sym-teal);
+}
+
+@keyframes sym-orbit {
+    from {
+        transform: rotate(-90deg);
+    }
+
+    to {
+        transform: rotate(270deg);
+    }
+}
+
+.sym-signin .login-container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 420px;
+}
+
+#login-main {
+    display: block;
+    height: auto;
+    width: 100%;
+    padding: 34px 34px 30px;
+    background: var(--sym-surface);
+    border: 1px solid var(--sym-line);
+    border-radius: var(--sym-r);
+    box-shadow: 0 24px 60px -36px rgba(20, 30, 45, 0.35);
+}
+
+#login-main form {
+    width: auto;
+    margin: 0;
+}
+
+#login-main .auth-form-header {
+    padding: 0;
+    margin: 0 0 22px;
+    background: transparent;
+    border-radius: 0;
+    color: var(--sym-ink);
+}
+
+#login-main .auth-form-header h1 {
+    margin: 0;
+    font-family: var(--sym-display);
+    font-size: 1.75rem;
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    color: var(--sym-ink);
+}
+
+#login-main .auth-form-body {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+}
+
+#login-main label {
+    display: block;
+    margin: 0 0 7px;
+    font-family: var(--sym-body);
+    font-weight: 600;
+    font-size: 0.86rem;
+    color: var(--sym-ink);
+}
+
+#login-main input.form-control:not([type="submit"]) {
+    width: 100%;
+    margin: 0 0 18px;
+    padding: 12px 14px;
+    font-family: var(--sym-body);
+    font-size: 0.96rem;
+    color: var(--sym-ink);
+    background: var(--sym-bg);
+    border: 1px solid var(--sym-line);
+    border-radius: var(--sym-r);
+    box-shadow: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#login-main input.form-control:not([type="submit"]):hover {
+    border-color: color-mix(in srgb, var(--sym-ink) 30%, var(--sym-line));
+}
+
+#login-main input.form-control:not([type="submit"]):focus,
+#login-main input.form-control:not([type="submit"]):focus-visible {
+    outline: none;
+    border-color: var(--sym-teal);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--sym-teal) 16%, transparent);
+}
+
+#login-main .feedback-container {
+    position: relative;
+    margin-top: 6px;
+}
+
+#login-main .btn-jupyter {
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 13px 24px;
+    font-family: var(--sym-body);
+    font-weight: 600;
+    font-size: 0.96rem;
+    line-height: 1.4;
+    color: var(--sym-btn-ink);
+    background: var(--sym-btn-bg);
+    border: 1px solid transparent;
+    border-radius: var(--sym-r);
+    box-shadow: none;
+    cursor: pointer;
+    transition: background-color 0.22s var(--sym-ease), color 0.22s;
+}
+
+#login-main .btn-jupyter:hover {
+    color: var(--sym-btn-hover-ink);
+    background: var(--sym-btn-hover-bg);
+}
+
+#login-main .btn-jupyter:active {
+    transform: translateY(1px);
+}
+
+#login-main .btn-jupyter:disabled {
+    opacity: 0.55;
+    cursor: progress;
+}
+
+#login-main .feedback-widget {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    padding: 0;
+    transform: translateY(-50%);
+}
+
+#login-main .feedback-widget i {
+    font-size: 1rem;
+    color: var(--sym-btn-ink);
+}
+
+#login-main .login_error {
+    margin: 0 0 18px;
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.45;
+    text-align: left;
+    color: var(--sym-error);
+    background: var(--sym-error-bg);
+    border: 1px solid var(--sym-error-line);
+    border-radius: var(--sym-r);
+}
+
+#login-main #insecure-login-warning {
+    margin: 0 0 18px;
+    padding: 10px 14px;
+    font-size: 0.86rem;
+    border-radius: var(--sym-r);
+}
+
+#login-main .login_terms {
+    margin-top: 16px;
+    font-size: 0.86rem;
+    color: var(--sym-ink-soft);
+}
+
+#login-main .service-login {
+    text-align: left;
+}
+
+@media (max-width: 900px) {
+    .sym-hero {
+        padding: 48px 0 64px;
+    }
+
+    .sym-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .sym-hero-logo {
+        width: min(300px, 78%);
+        margin-bottom: 24px;
+    }
+
+    .sym-orbit-outer {
+        width: 640px;
+        height: 640px;
+        margin: -320px 0 0 -320px;
+    }
+
+    .sym-orbit-inner {
+        width: 460px;
+        height: 460px;
+        margin: -230px 0 0 -230px;
+        animation: none;
+    }
+
+    /* The travelling dot would cross the title column once the grid stacks */
+    .sym-orbit-dot {
+        display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    #login-main {
+        padding: 26px 22px 24px;
+    }
+}
+
+/* About this hub */
+
+.sym-about {
+    padding: 92px 0;
+    background: var(--sym-bg-alt);
+    border-top: 1px solid var(--sym-hairline);
+}
+
+.sym-about-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 28px 40px;
+    margin-bottom: 44px;
+}
+
+.details-welcome {
+    margin: 0;
+    max-width: 24ch;
+    font-family: var(--sym-display);
+    font-weight: 400;
+    font-size: clamp(1.9rem, 3.4vw, 2.7rem);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    color: var(--sym-ink);
+    text-wrap: balance;
+}
+
+.details-logos {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.sym .details-logos a {
+    display: flex;
+    align-items: center;
+    height: 64px;
+    padding: 0 18px;
+    background: #ffffff;
+    border: 1px solid var(--sym-line);
+    border-radius: var(--sym-r);
+    text-decoration: none;
+    transition: border-color 0.22s;
+}
+
+.sym .details-logos a:hover {
+    border-color: var(--sym-ink);
+}
+
+[data-bs-theme="dark"] .sym .details-logos a {
+    background: #dfe3e7;
+    border-color: transparent;
+}
+
+.sym .details-welcome a {
+    color: inherit;
+    text-decoration-color: color-mix(in srgb, currentColor 25%, transparent);
+}
+
+.sym .details-welcome a:hover,
+.sym .details-welcome a:focus-visible {
+    color: inherit;
+    text-decoration-color: var(--sym-teal);
+}
+
+.details-logos img {
+    display: block;
+    height: 36px;
+    width: auto;
+}
+
+.sym-info {
+    margin: 0;
+    background: var(--sym-surface);
+    border: 1px solid var(--sym-line);
+    border-radius: var(--sym-r);
+    overflow: hidden;
+}
+
+.sym-info-row {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 28px;
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--sym-hairline);
+}
+
+.sym-info-row:last-child {
+    border-bottom: 0;
+}
+
+.sym-info dt {
+    font-weight: 600;
+    color: var(--sym-ink);
+    line-height: 1.4;
+}
+
+.sym-info dd {
+    margin: 0;
+    max-width: 68ch;
+    color: var(--sym-ink-soft);
+}
+
+.sym-info dd p {
+    margin: 0;
+}
+
+.sym-info dd p + p {
     margin-top: 12px;
 }
 
-.questions > div {
-    margin-top: 32px;
-    padding-bottom: 32px;
-    border-bottom: 2px lightgrey dotted;
+@media (max-width: 760px) {
+    .sym-about {
+        padding: 64px 0;
+    }
+
+    .sym-info-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 20px 22px;
+    }
 }
 
-.footer {
-    padding-top: 64px;
-    text-align: center;
-    color: darkgrey;
+/* Footer */
+
+.sym-footer {
+    padding: 60px 0 32px;
+    background: var(--sym-footer-bg);
+    color: #aab3bb;
+    text-align: left;
 }
 
-.footer a {
-    color: darkgrey;
-    text-decoration: underline;
+.sym .sym-footer a {
+    color: #d5dbe0;
+    text-decoration-color: rgba(213, 219, 224, 0.35);
 }
 
-p.hub-login-text {
-    font-size: 1.5em;
+.sym .sym-footer a:hover {
+    color: #ffffff;
+    text-decoration-color: #ffffff;
 }
 
-div.login-header img.hub-logo {
-    width: 40%;
+.sym-footer-top {
+    display: grid;
+    grid-template-columns: 1.4fr 2fr;
+    gap: 40px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sym-footer-logo {
+    display: block;
+    height: 34px;
+    width: auto;
+}
+
+.sym-credits {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.sym-credits h5 {
+    margin: 0 0 12px;
+    font-family: var(--sym-body);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+.sym-credits p {
+    margin: 0;
+    font-size: 0.92rem;
+    color: #aab3bb;
+}
+
+.sym-footer-small {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 32px;
+    padding-top: 22px;
+    font-size: 0.84rem;
+    color: #8e979f;
+}
+
+.sym-footer-small p {
+    margin: 0;
+}
+
+.sym-nowrap {
+    white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+    .sym-footer-top {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sym-credits {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sym-orbit-inner {
+        animation: none;
+    }
+
+    .sym *,
+    .sym *::before,
+    .sym *::after {
+        transition: none !important;
+    }
 }
