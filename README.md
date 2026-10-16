@@ -4,6 +4,20 @@ This repo contains html jinja2 templates for customizing the appearance of Jupyt
 
 Any changes made in this repository will be reflected in the JupyterHub within 5 minutes.
 
+## This branch: Schmidt Observatory System Science Symposium hub
+
+The `schmidt-astro-events` branch customizes the login page for the [Schmidt Observatory System Science Symposium](https://symposium.schmidtobservatorysystem.org/) hub, styled after the event website. [`DESIGN.md`](DESIGN.md) records the design system and [`PRODUCT.md`](PRODUCT.md) the product context.
+
+Previews of `templates/login.html`, rendered with the hub's template vars against JupyterHub 5.5.3's base templates:
+
+| Desktop, light theme | Desktop, dark theme |
+| --- | --- |
+| ![Login page on desktop in the light theme](docs/screenshots/login-desktop-light.png) | ![Login page on desktop in the dark theme](docs/screenshots/login-desktop-dark.png) |
+
+| Phone (390px wide) | Sign-in error |
+| --- | --- |
+| <img src="docs/screenshots/login-mobile.png" alt="Login page at phone width" width="260"> | ![Sign-in card showing an invalid username or password error](docs/screenshots/login-error.png) |
+
 ## General, out of the box variations to the default homepage via existing branches
 
 In this repositories there are some branches that provide alternatives to the default 2i2c landing page, but without being specific to a certain community hub. These are:
